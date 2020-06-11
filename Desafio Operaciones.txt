@@ -1,0 +1,127 @@
+Jocelyn Casteletti
+
+Parte 1:
+
+--Crear tabla Editoriales
+
+CREATE TABLE Editoriales(
+Codigo INT,
+Nombre VARCHAR(100),
+PRIMARY KEY(Codigo)
+)
+
+
+--Crear tabla Libros
+
+CREATE TABLE Libros(
+Codigo INT,
+Titulo VARCHAR(200),
+CodigoEditorial INT,
+PRIMARY KEY(Codigo),
+FOREIGN KEY(CodigoEditorial) REFERENCES Editoriales(Codigo)
+)
+
+
+--Insertar campos en la tabla Editoriales
+
+INSERT INTO editoriales(Codigo,Nombre) values(1,'ANAYA');
+INSERT INTO editoriales(Codigo,Nombre) values(2,'ANDINA');
+INSERT INTO editoriales(Codigo,Nombre) values(3,'S.M');
+
+
+
+--Insertar campos en la tabla Libros
+
+INSERT INTO Libros(Codigo,Titulo,CodigoEditorial) Values(1,'Don Quijote de La Mancha I',1 );
+INSERT INTO Libros(Codigo,Titulo,CodigoEditorial) Values(2,'El principito',2 );
+INSERT INTO Libros(Codigo,Titulo,CodigoEditorial) Values(3,'El príncipe ',3 );
+INSERT INTO Libros(Codigo,Titulo,CodigoEditorial) Values(4,'Diplomacia',3); 
+INSERT INTO Libros(Codigo,Titulo,CodigoEditorial) Values(5,'Don Quijote de La Mancha II',1 );
+
+
+select * from libros;
+
+
+--Modificar tabla Libros
+
+ALTER TABLE Libros add autor varchar(100);
+
+
+--Agregar autores
+
+UPDATE libros set autor='Miguel de Cervantes' where codigo=1;
+UPDATE libros set autor='Antoine SaintExupery' where codigo=2;
+UPDATE libros set autor='Maquiavelo' where codigo=3;
+UPDATE libros set autor='Henry Kissinger' where codigo=4;
+UPDATE libros set autor='Miguel de Cervantes ' where codigo=5;
+
+
+--insertar 2 nuevos Libros en tabla Libros
+
+INSERT INTO Libros(Codigo,Titulo,Autor,codigoeditorial) values(6,'Los Hermanoz Karamazov','Fiodor Dostoiesvki',2);
+INSERT INTO Libros(Codigo,Titulo,Autor,codigoeditorial) values(7,'Pendulo de Focault','Umberto Eco',1);
+
+
+--Eliminar libros de Anaya
+
+DELETE from libros where codigoeditorial=1;
+
+
+--Actualizar el nombre de la Editorial Andina a Iberlibro
+
+UPDATE editoriales set nombre='IberLibro' where codigo=2;
+
+
+
+
+Parte 2:
+
+--Crear tabla Usuarios
+
+CREATE TABLE usuarios(
+codigo int  ,
+nombre VARCHAR(20),
+apellido VARCHAR(20),
+telefono VARCHAR(9),
+PRIMARY KEY (codigo)
+)
+
+
+-- Crear tabla Prestamos
+
+CREATE TABLE prestamos(
+codigo  int,
+codigo_libro int NOT NULL,
+codigo_usuario int NOT NULL,
+fecha_prestamo DATE NOT NULL,
+PRIMARY KEY (codigo),
+FOREIGN KEY(codigo_libro) REFERENCES libros(codigo),
+FOREIGN KEY(codigo_usuario) REFERENCES usuarios(codigo)
+)
+
+
+--Insertar campos en tabla Usuarios
+
+select * from usuarios;
+
+
+INSERT INTO usuarios(Codigo,Nombre,Apellido,Telefono) values(1,'Jose','Soto','98347756');
+INSERT INTO usuarios(Codigo,Nombre,Apellido,Telefono) values(2,'Miguel','Gomez','94845537');
+INSERT INTO usuarios(Codigo,Nombre,Apellido,Telefono) values(3,'Sara','Avendaño','93345455');
+INSERT INTO usuarios(Codigo,Nombre,Apellido,Telefono) values(4,'Jaime','Carrasco','92223453');
+
+
+select * from libros;
+select * from usuarios;
+select * from prestamos;
+
+
+--Insertar campos en tabla Prestamos
+
+INSERT INTO prestamos(codigo,codigo_libro,codigo_usuario,fecha_prestamo) VALUES (1,2,1,STR_TO_DATE('01-10-2019', '%d,%m,%y'));
+INSERT INTO prestamos(codigo,codigo_libro,codigo_usuario,fecha_prestamo) VALUES (2,4,2,STR_TO_DATE('02-10-2019', '%d,%m,%y'));
+INSERT INTO prestamos(codigo,codigo_libro,codigo_usuario,fecha_prestamo) VALUES (3,2,3,STR_TO_DATE('02-10-2019', '%d,%m,%y'));
+INSERT INTO prestamos(codigo,codigo_libro,codigo_usuario,fecha_prestamo) VALUES (4,1,4,STR_TO_DATE('10-10-2019', '%d,%m,%y'));
+INSERT INTO prestamos(codigo,codigo_libro,codigo_usuario,fecha_prestamo) VALUES (5,5,4,STR_TO_DATE('01-11-2019', '%d,%m,%y'));
+
+
